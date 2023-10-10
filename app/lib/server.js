@@ -1,5 +1,6 @@
 //  Node imports
-const express = require("express"),
+const
+  express = require("express"),
   fs = require("fs"),
   yml = require("js-yaml"),
   bodyParser = require("body-parser"),
@@ -24,9 +25,6 @@ const docs = swaggerDoc(options);
 const app = express(),
   PORT = process.env.SERVER_PORT || 3000;
 
-// import Routes
-const profiles = require("./routes/api/profiles");
-
 // error handler
 const errorhandler = require("./error-handling/error-handler");
 // parsers
@@ -37,8 +35,10 @@ app.use(cors());
 // swagger doc route
 app.use("/admin/swagger", swaggerUI.serve, swaggerUI.setup(docs));
 
-// define routes
-app.use("/api/profiles/", profiles);
+// routes imports
+const setupRoutes = require('./routes/setupRoutes');
+
+setupRoutes(app);
 
 app.use(errorhandler);
 
